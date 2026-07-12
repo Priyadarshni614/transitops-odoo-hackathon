@@ -4,8 +4,9 @@ function DriverForm({ onAdd }) {
   const [driver, setDriver] = useState({
     name: "",
     licenseNumber: "",
-    phone: "",
-    vehicleAssigned: "",
+    licenseCategory: "LMV",
+    licenseExpiry: "",
+    contactNumber: "",
     status: "Available",
   });
 
@@ -18,13 +19,15 @@ function DriverForm({ onAdd }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     onAdd(driver);
 
     setDriver({
       name: "",
       licenseNumber: "",
-      phone: "",
-      vehicleAssigned: "",
+      licenseCategory: "LMV",
+      licenseExpiry: "",
+      contactNumber: "",
       status: "Available",
     });
   };
@@ -42,7 +45,8 @@ function DriverForm({ onAdd }) {
         required
       />
 
-      <br /><br />
+      <br />
+      <br />
 
       <input
         type="text"
@@ -53,40 +57,59 @@ function DriverForm({ onAdd }) {
         required
       />
 
-      <br /><br />
+      <br />
+      <br />
+
+      <select
+        name="licenseCategory"
+        value={driver.licenseCategory}
+        onChange={handleChange}
+      >
+        <option value="LMV">LMV</option>
+        <option value="HMV">HMV</option>
+        <option value="MCWG">MCWG</option>
+        <option value="Transport">Transport</option>
+      </select>
+
+      <br />
+      <br />
 
       <input
-        type="text"
-        name="phone"
-        placeholder="Phone Number"
-        value={driver.phone}
+        type="date"
+        name="licenseExpiry"
+        value={driver.licenseExpiry}
         onChange={handleChange}
         required
       />
 
-      <br /><br />
+      <br />
+      <br />
 
       <input
         type="text"
-        name="vehicleAssigned"
-        placeholder="Vehicle Assigned"
-        value={driver.vehicleAssigned}
+        name="contactNumber"
+        placeholder="Contact Number"
+        value={driver.contactNumber}
         onChange={handleChange}
+        required
       />
 
-      <br /><br />
+      <br />
+      <br />
 
       <select
         name="status"
         value={driver.status}
         onChange={handleChange}
       >
-        <option>Available</option>
-        <option>On Duty</option>
-        <option>Off Duty</option>
+        <option value="Available">Available</option>
+        <option value="On Trip">On Trip</option>
+        <option value="Off Duty">Off Duty</option>
+        <option value="Suspended">Suspended</option>
       </select>
 
-      <br /><br />
+      <br />
+      <br />
 
       <button type="submit">Add Driver</button>
     </form>

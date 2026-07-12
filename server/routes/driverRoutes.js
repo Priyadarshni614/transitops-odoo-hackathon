@@ -50,32 +50,46 @@ router.get("/:id", async (req, res) => {
 // Add driver
 router.post("/", async (req, res) => {
   try {
-    const licenseNumber = req.body.licenseNumber?.trim().toUpperCase();
+    const {
+      name,
+      licenseNumber,
+      licenseCategory,
+      licenseExpiry,
+      contactNumber,
+      status,
+    } = req.body;
 
-    const existingDriver = await Driver.findOne({ licenseNumber });
+    const existingDriver = await Driver.findOne({
+      licenseNumber: licenseNumber.trim().toUpperCase(),
+    });
 
     if (existingDriver) {
       return res.status(409).json({
         success: false,
-        message: "Licence number already exists",
+        message: "License number already exists",
       });
     }
 
     const driver = await Driver.create({
-      ...req.body,
-      licenseNumber,
+      name,
+      licenseNumber: licenseNumber.trim().toUpperCase(),
+      licenseCategory,
+      licenseExpiry,
+      contactNumber,
+      status,
     });
 
-    return res.status(201).json({
+    res.status(201).json({
       success: true,
       message: "Driver registered successfully",
       data: driver,
     });
   } catch (error) {
-    return res.status(400).json({
+    console.error(error);
+
+    res.status(400).json({
       success: false,
-      message: "Unable to register driver",
-      error: error.message,
+      message: error.message,
     });
   }
 });

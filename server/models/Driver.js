@@ -10,7 +10,7 @@ const driverSchema = new mongoose.Schema(
 
     licenseNumber: {
       type: String,
-      required: [true, "Licence number is required"],
+      required: [true, "License number is required"],
       unique: true,
       trim: true,
       uppercase: true,
@@ -18,13 +18,13 @@ const driverSchema = new mongoose.Schema(
 
     licenseCategory: {
       type: String,
-      required: [true, "Licence category is required"],
+      required: [true, "License category is required"],
       enum: ["LMV", "HMV", "MCWG", "Transport"],
     },
 
     licenseExpiry: {
       type: Date,
-      required: [true, "Licence expiry date is required"],
+      required: [true, "License expiry date is required"],
     },
 
     contactNumber: {
@@ -36,14 +36,13 @@ const driverSchema = new mongoose.Schema(
     safetyScore: {
       type: Number,
       default: 100,
-      min: [0, "Safety score cannot be negative"],
-      max: [100, "Safety score cannot exceed 100"],
+      min: 0,
+      max: 100,
     },
 
     tripsCompleted: {
       type: Number,
       default: 0,
-      min: 0,
     },
 
     status: {
@@ -54,7 +53,7 @@ const driverSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  },
+  }
 );
 
 module.exports = mongoose.model("Driver", driverSchema);

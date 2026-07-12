@@ -10,12 +10,21 @@ import {
 function DriverPage() {
   const [drivers, setDrivers] = useState([]);
 
+  // Fetch all drivers
   const fetchDrivers = async () => {
     try {
       const res = await getDrivers();
-      setDrivers(res.data);
+
+      // Backend returns:
+      // {
+      //   success: true,
+      //   count: ...,
+      //   data: [...]
+      // }
+
+      setDrivers(res.data.data);
     } catch (err) {
-      console.error(err);
+      console.error("Error fetching drivers:", err);
     }
   };
 
@@ -23,14 +32,40 @@ function DriverPage() {
     fetchDrivers();
   }, []);
 
+  // Add Driver
   const handleAdd = async (driver) => {
-    await addDriver(driver);
-    fetchDrivers();
+    try {
+      const res = await addDriver(driver);
+
+      alert(res.data.message);
+
+      fetchDrivers();
+    } catch (err) {
+      console.error(err);
+
+      alert(
+        err.response?.data?.message ||
+          "Unable to add driver"
+      );
+    }
   };
 
+  // Delete Driver
   const handleDelete = async (id) => {
-    await deleteDriver(id);
-    fetchDrivers();
+    try {
+      const res = await deleteDriver(id);
+
+      alert(res.data.message);
+
+      fetchDrivers();
+    } catch (err) {
+      console.error(err);
+
+      alert(
+        err.response?.data?.message ||
+          "Unable to delete driver"
+      );
+    }
   };
 
   return (
