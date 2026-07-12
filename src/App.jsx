@@ -7,6 +7,7 @@ import AppLayout from "./components/common/AppLayout";
 import Dashboard from "./dashboard/Dashboard";
 import PlaceholderPage from "./pages/PlaceholderPage";
 import SettingsPage from "./pages/SettingsPage";
+import AnalyticsPage from "./pages/AnalyticsPage";
 import VehiclePage from "./modules/Vehicles/VehiclePage";
 
 function App() {
@@ -86,10 +87,7 @@ function App() {
             <ProtectedRoute
               allowedRoles={["Fleet Manager", "Financial Analyst"]}
             >
-              <PlaceholderPage
-                title="Reports & Analytics"
-                description="Review fuel efficiency, utilization and vehicle ROI."
-              />
+              <AnalyticsPage />
             </ProtectedRoute>
           }
         />
