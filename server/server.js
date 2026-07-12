@@ -1,5 +1,7 @@
 require("dotenv").config();
-
+const tripRoutes = require("./routes/tripRoutes");
+const maintenanceRoutes = require("./routes/maintenanceRoutes");
+const expenseRoutes = require("./routes/expenseRoutes");
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -14,7 +16,9 @@ app.use(
 );
 
 app.use(express.json());
-
+app.use("/api/trips", tripRoutes);
+app.use("/api/maintenance", maintenanceRoutes);
+app.use("/api/expenses", expenseRoutes);
 app.get("/api/health", (req, res) => {
   res.status(200).json({
     success: true,
