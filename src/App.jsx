@@ -1,90 +1,114 @@
+import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 
-const kpis = [
-  { title: "Total Vehicles", value: "0" },
-  { title: "Available Vehicles", value: "0" },
-  { title: "Active Trips", value: "0" },
-  { title: "Drivers On Duty", value: "0" },
-  { title: "Vehicles In Maintenance", value: "0" },
-  { title: "Fleet Utilization", value: "0%" },
-];
+import Login from "./auth/Login";
+import ProtectedRoute from "./auth/ProtectedRoute";
+import AppLayout from "./components/common/AppLayout";
+import Dashboard from "./dashboard/Dashboard";
+import PlaceholderPage from "./pages/PlaceholderPage";
 
 function App() {
   return (
-    <div className="app-layout">
-      <aside className="sidebar">
-        <div className="brand">
-          <h1>TransitOps</h1>
-          <p>Smart Transport Platform</p>
-        </div>
+    <Routes>
+      <Route path="/login" element={<Login />} />
 
-        <nav className="sidebar-nav">
-          <button className="nav-item active">Dashboard</button>
-          <button className="nav-item">Vehicles</button>
-          <button className="nav-item">Drivers</button>
-          <button className="nav-item">Trips</button>
-          <button className="nav-item">Maintenance</button>
-          <button className="nav-item">Fuel & Expenses</button>
-          <button className="nav-item">Reports</button>
-        </nav>
+      <Route
+        element={
+          <ProtectedRoute>
+            <AppLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route path="/dashboard" element={<Dashboard />} />
 
-        <button className="logout-button">Logout</button>
-      </aside>
+        <Route
+          path="/fleet"
+          element={
+            <PlaceholderPage
+              title="Fleet Management"
+              description="Register, update and monitor fleet vehicles."
+            />
+          }
+        />
 
-      <main className="main-content">
-        <header className="topbar">
-          <div>
-            <h2>Fleet Dashboard</h2>
-            <p>Monitor your transport operations in real time.</p>
-          </div>
+        <Route
+          path="/drivers"
+          element={
+            <ProtectedRoute allowedRoles={["Safety Officer"]}>
+              <PlaceholderPage
+                title="Drivers & Safety Profiles"
+                description="Manage drivers, licences and safety scores."
+              />
+            </ProtectedRoute>
+          }
+        />
 
-          <div className="user-profile">
-            <span className="avatar">PH</span>
+        <Route
+          path="/trips"
+          element={
+            <ProtectedRoute allowedRoles={["Dispatcher", "Safety Officer"]}>
+              <PlaceholderPage
+                title="Trip Dispatcher"
+                description="Create, dispatch and monitor transport trips."
+              />
+            </ProtectedRoute>
+          }
+        />
 
-            <div>
-              <strong>Priya H</strong>
-              <p>Fleet Manager</p>
-            </div>
-          </div>
-        </header>
+        <Route
+          path="/maintenance"
+          element={
+            <ProtectedRoute allowedRoles={["Fleet Manager"]}>
+              <PlaceholderPage
+                title="Maintenance"
+                description="Create and monitor vehicle service records."
+              />
+            </ProtectedRoute>
+          }
+        />
 
-        <section className="kpi-grid">
-          {kpis.map((kpi) => (
-            <article className="kpi-card" key={kpi.title}>
-              <p>{kpi.title}</p>
-              <h3>{kpi.value}</h3>
-            </article>
-          ))}
-        </section>
+        <Route
+          path="/expenses"
+          element={
+            <ProtectedRoute allowedRoles={["Financial Analyst"]}>
+              <PlaceholderPage
+                title="Fuel & Expenses"
+                description="Track fuel consumption and operational expenses."
+              />
+            </ProtectedRoute>
+          }
+        />
 
-        <section className="dashboard-grid">
-          <article className="panel">
-            <div className="panel-header">
-              <h3>Recent Trips</h3>
-              <button type="button">View All</button>
-            </div>
+        <Route
+          path="/analytics"
+          element={
+            <ProtectedRoute
+              allowedRoles={["Fleet Manager", "Financial Analyst"]}
+            >
+              <PlaceholderPage
+                title="Reports & Analytics"
+                description="Review fuel efficiency, utilization and vehicle ROI."
+              />
+            </ProtectedRoute>
+          }
+        />
 
-            <div className="empty-state">
-              <h4>No trips available</h4>
-              <p>Newly created trips will appear here.</p>
-            </div>
-          </article>
+        <Route
+          path="/settings"
+          element={
+            <ProtectedRoute allowedRoles={["Fleet Manager"]}>
+              <PlaceholderPage
+                title="Settings & RBAC"
+                description="Configure depot settings and role permissions."
+              />
+            </ProtectedRoute>
+          }
+        />
+      </Route>
 
-          <article className="panel">
-            <div className="panel-header">
-              <h3>Quick Actions</h3>
-            </div>
-
-            <div className="quick-actions">
-              <button type="button">Register Vehicle</button>
-              <button type="button">Add Driver</button>
-              <button type="button">Create Trip</button>
-              <button type="button">Add Maintenance</button>
-            </div>
-          </article>
-        </section>
-      </main>
-    </div>
+      <Route path="/" element={<Navigate to="/dashboard" replace />} />
+      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+    </Routes>
   );
 }
 
