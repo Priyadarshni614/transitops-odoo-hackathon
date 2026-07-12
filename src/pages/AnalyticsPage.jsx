@@ -92,7 +92,52 @@ function AnalyticsPage() {
   }
 
   useEffect(() => {
-    loadAnalytics();
+    let cancelled = false;
+
+    async function loadInitialAnalytics() {
+      try {
+        const [
+          vehicleResult,
+          tripResult,
+          fuelResult,
+          expenseResult,
+          maintenanceResult,
+        ] = await Promise.all([
+          getData("/vehicles"),
+          getData("/trips"),
+          getData("/expenses/fuel"),
+          getData("/expenses"),
+          getData("/maintenance"),
+        ]);
+
+        if (cancelled) {
+          return;
+        }
+
+        setVehicles(vehicleResult.data || []);
+        setTrips(tripResult.data || []);
+        setFuelLogs(fuelResult.data || []);
+        setExpenses(expenseResult.data || []);
+        setMaintenanceRecords(maintenanceResult.data || []);
+      } catch (requestError) {
+        if (!cancelled) {
+          setError(
+            requestError.message ||
+              "Unable to load analytics information.",
+          );
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    }
+
+    void loadInitialAnalytics();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const analytics = useMemo(() => {
