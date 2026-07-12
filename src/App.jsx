@@ -6,6 +6,8 @@ import ProtectedRoute from "./auth/ProtectedRoute";
 import AppLayout from "./components/common/AppLayout";
 import Dashboard from "./dashboard/Dashboard";
 import PlaceholderPage from "./pages/PlaceholderPage";
+import SettingsPage from "./pages/SettingsPage";
+import VehiclePage from "./modules/Vehicles/VehiclePage";
 
 function App() {
   return (
@@ -24,10 +26,9 @@ function App() {
         <Route
           path="/fleet"
           element={
-            <PlaceholderPage
-              title="Fleet Management"
-              description="Register, update and monitor fleet vehicles."
-            />
+            <ProtectedRoute allowedRoles={["Fleet Manager"]}>
+              <VehiclePage />
+            </ProtectedRoute>
           }
         />
 
@@ -93,17 +94,7 @@ function App() {
           }
         />
 
-        <Route
-          path="/settings"
-          element={
-            <ProtectedRoute allowedRoles={["Fleet Manager"]}>
-              <PlaceholderPage
-                title="Settings & RBAC"
-                description="Configure depot settings and role permissions."
-              />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/settings" element={<SettingsPage />} />
       </Route>
 
       <Route path="/" element={<Navigate to="/dashboard" replace />} />

@@ -1,14 +1,19 @@
 require("dotenv").config();
-const tripRoutes = require("./routes/tripRoutes");
-const maintenanceRoutes = require("./routes/maintenanceRoutes");
-const expenseRoutes = require("./routes/expenseRoutes");
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
+// Routes
+const vehicleRoutes = require("./routes/vehicleRoutes");
+const tripRoutes = require("./routes/tripRoutes");
+const maintenanceRoutes = require("./routes/maintenanceRoutes");
+const expenseRoutes = require("./routes/expenseRoutes");
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Middleware
 app.use(
   cors({
     origin: process.env.CLIENT_URL || "http://localhost:5173",
@@ -16,9 +21,8 @@ app.use(
 );
 
 app.use(express.json());
-app.use("/api/trips", tripRoutes);
-app.use("/api/maintenance", maintenanceRoutes);
-app.use("/api/expenses", expenseRoutes);
+
+// Health check
 app.get("/api/health", (req, res) => {
   res.status(200).json({
     success: true,
@@ -26,6 +30,13 @@ app.get("/api/health", (req, res) => {
   });
 });
 
+// API routes
+app.use("/api/vehicles", vehicleRoutes);
+app.use("/api/trips", tripRoutes);
+app.use("/api/maintenance", maintenanceRoutes);
+app.use("/api/expenses", expenseRoutes);
+
+// Start server
 async function startServer() {
   try {
     if (!process.env.MONGODB_URI) {
