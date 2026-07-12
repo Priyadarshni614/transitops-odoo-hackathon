@@ -6,6 +6,7 @@ import ProtectedRoute from "./auth/ProtectedRoute";
 import AppLayout from "./components/common/AppLayout";
 import Dashboard from "./dashboard/Dashboard";
 import PlaceholderPage from "./pages/PlaceholderPage";
+import DriverPage from "./pages/DriverPage";
 
 function App() {
   return (
@@ -35,10 +36,7 @@ function App() {
           path="/drivers"
           element={
             <ProtectedRoute allowedRoles={["Safety Officer"]}>
-              <PlaceholderPage
-                title="Drivers & Safety Profiles"
-                description="Manage drivers, licences and safety scores."
-              />
+              <DriverPage />
             </ProtectedRoute>
           }
         />
