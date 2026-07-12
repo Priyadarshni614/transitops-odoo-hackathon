@@ -1,122 +1,91 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import "./App.css";
+
+const kpis = [
+  { title: "Total Vehicles", value: "0" },
+  { title: "Available Vehicles", value: "0" },
+  { title: "Active Trips", value: "0" },
+  { title: "Drivers On Duty", value: "0" },
+  { title: "Vehicles In Maintenance", value: "0" },
+  { title: "Fleet Utilization", value: "0%" },
+];
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div className="app-layout">
+      <aside className="sidebar">
+        <div className="brand">
+          <h1>TransitOps</h1>
+          <p>Smart Transport Platform</p>
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
 
-      <div className="ticks"></div>
+        <nav className="sidebar-nav">
+          <button className="nav-item active">Dashboard</button>
+          <button className="nav-item">Vehicles</button>
+          <button className="nav-item">Drivers</button>
+          <button className="nav-item">Trips</button>
+          <button className="nav-item">Maintenance</button>
+          <button className="nav-item">Fuel & Expenses</button>
+          <button className="nav-item">Reports</button>
+        </nav>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        <button className="logout-button">Logout</button>
+      </aside>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      <main className="main-content">
+        <header className="topbar">
+          <div>
+            <h2>Fleet Dashboard</h2>
+            <p>Monitor your transport operations in real time.</p>
+          </div>
+
+          <div className="user-profile">
+            <span className="avatar">PH</span>
+
+            <div>
+              <strong>Priya H</strong>
+              <p>Fleet Manager</p>
+            </div>
+          </div>
+        </header>
+
+        <section className="kpi-grid">
+          {kpis.map((kpi) => (
+            <article className="kpi-card" key={kpi.title}>
+              <p>{kpi.title}</p>
+              <h3>{kpi.value}</h3>
+            </article>
+          ))}
+        </section>
+
+        <section className="dashboard-grid">
+          <article className="panel">
+            <div className="panel-header">
+              <h3>Recent Trips</h3>
+              <button type="button">View All</button>
+            </div>
+
+            <div className="empty-state">
+              <h4>No trips available</h4>
+              <p>Newly created trips will appear here.</p>
+            </div>
+          </article>
+
+          <article className="panel">
+            <div className="panel-header">
+              <h3>Quick Actions</h3>
+            </div>
+
+            <div className="quick-actions">
+              <button type="button">Register Vehicle</button>
+              <button type="button">Add Driver</button>
+              <button type="button">Create Trip</button>
+              <button type="button">Add Maintenance</button>
+            </div>
+          </article>
+        </section>
+      </main>
+    </div>
+  );
 }
 
-export default App
+export default App;
