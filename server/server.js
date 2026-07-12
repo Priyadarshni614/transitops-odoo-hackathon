@@ -4,17 +4,25 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
+// Routes
+const vehicleRoutes = require("./routes/vehicleRoutes");
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Middleware
 app.use(
   cors({
     origin: process.env.CLIENT_URL || "http://localhost:5173",
-  }),
+  })
 );
 
 app.use(express.json());
 
+// API Routes
+app.use("/api/vehicles", vehicleRoutes);
+
+// Health Check
 app.get("/api/health", (req, res) => {
   res.status(200).json({
     success: true,
@@ -22,6 +30,7 @@ app.get("/api/health", (req, res) => {
   });
 });
 
+// Start Server
 async function startServer() {
   try {
     if (!process.env.MONGODB_URI) {
@@ -30,13 +39,13 @@ async function startServer() {
 
     await mongoose.connect(process.env.MONGODB_URI);
 
-    console.log("Connected to local MongoDB");
+    console.log("✅ Connected to local MongoDB");
 
     app.listen(PORT, () => {
-      console.log(`TransitOps server running on port ${PORT}`);
+      console.log(`🚀 TransitOps server running on port ${PORT}`);
     });
   } catch (error) {
-    console.error("Server startup failed:", error.message);
+    console.error("❌ Server startup failed:", error.message);
     process.exit(1);
   }
 }
