@@ -6,12 +6,17 @@ import {
 } from "../../services/api";
 import "./Operations.css";
 
+function getTodayDate() {
+  const today = new Date();
+  return today.toISOString().split("T")[0];
+}
+
 const initialForm = {
   vehicle: "",
   serviceType: "Oil Change",
   description: "",
   cost: "",
-  startDate: "",
+  startDate: getTodayDate(),
 };
 
 function MaintenancePage() {

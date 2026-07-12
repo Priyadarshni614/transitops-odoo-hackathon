@@ -16,34 +16,20 @@ const navigationByRole = {
   Dispatcher: [
     ["Dashboard", "/dashboard"],
     ["Fleet", "/fleet"],
-    ["Drivers", "/drivers"],
     ["Trips", "/trips"],
-    ["Maintenance", "/maintenance"],
-    ["Fuel & Expenses", "/expenses"],
-    ["Analytics", "/analytics"],
-    ["Settings", "/settings"],
   ],
 
   "Safety Officer": [
     ["Dashboard", "/dashboard"],
-    ["Fleet", "/fleet"],
     ["Drivers", "/drivers"],
     ["Trips", "/trips"],
-    ["Maintenance", "/maintenance"],
-    ["Fuel & Expenses", "/expenses"],
-    ["Analytics", "/analytics"],
-    ["Settings", "/settings"],
   ],
 
   "Financial Analyst": [
     ["Dashboard", "/dashboard"],
     ["Fleet", "/fleet"],
-    ["Drivers", "/drivers"],
-    ["Trips", "/trips"],
-    ["Maintenance", "/maintenance"],
     ["Fuel & Expenses", "/expenses"],
     ["Analytics", "/analytics"],
-    ["Settings", "/settings"],
   ],
 };
 

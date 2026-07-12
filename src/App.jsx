@@ -10,6 +10,9 @@ import SettingsPage from "./pages/SettingsPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import DriverPage from "./pages/DriverPage";
 import VehiclePage from "./modules/Vehicles/VehiclePage";
+import TripPage from "./modules/operations/TripPage";
+import MaintenancePage from "./modules/operations/MaintenancePage";
+import ExpensePage from "./modules/operations/ExpensePage";
 
 function App() {
   return (
@@ -50,11 +53,10 @@ function App() {
         <Route
           path="/trips"
           element={
-            <ProtectedRoute allowedRoles={["Dispatcher", "Safety Officer"]}>
-              <PlaceholderPage
-                title="Trip Dispatcher"
-                description="Create, dispatch and monitor transport trips."
-              />
+            <ProtectedRoute
+              allowedRoles={["Fleet Manager", "Dispatcher", "Safety Officer"]}
+            >
+              <TripPage />
             </ProtectedRoute>
           }
         />
@@ -63,10 +65,7 @@ function App() {
           path="/maintenance"
           element={
             <ProtectedRoute allowedRoles={["Fleet Manager"]}>
-              <PlaceholderPage
-                title="Maintenance"
-                description="Create and monitor vehicle service records."
-              />
+              <MaintenancePage />
             </ProtectedRoute>
           }
         />
@@ -74,11 +73,8 @@ function App() {
         <Route
           path="/expenses"
           element={
-            <ProtectedRoute allowedRoles={["Financial Analyst"]}>
-              <PlaceholderPage
-                title="Fuel & Expenses"
-                description="Track fuel consumption and operational expenses."
-              />
+            <ProtectedRoute allowedRoles={["Financial Analyst", "Fleet Manager"]}>
+              <ExpensePage />
             </ProtectedRoute>
           }
         />
@@ -94,7 +90,14 @@ function App() {
           }
         />
 
-        <Route path="/settings" element={<SettingsPage />} />
+        <Route
+          path="/settings"
+          element={
+            <ProtectedRoute allowedRoles={["Fleet Manager"]}>
+              <SettingsPage />
+            </ProtectedRoute>
+          }
+        />
       </Route>
 
       <Route path="/" element={<Navigate to="/dashboard" replace />} />
