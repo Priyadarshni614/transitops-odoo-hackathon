@@ -8,6 +8,7 @@ import Dashboard from "./dashboard/Dashboard";
 import PlaceholderPage from "./pages/PlaceholderPage";
 import SettingsPage from "./pages/SettingsPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
+import DriverPage from "./pages/DriverPage";
 import VehiclePage from "./modules/Vehicles/VehiclePage";
 
 function App() {
@@ -27,7 +28,9 @@ function App() {
         <Route
           path="/fleet"
           element={
-            <ProtectedRoute allowedRoles={["Fleet Manager"]}>
+            <ProtectedRoute
+              allowedRoles={["Fleet Manager", "Dispatcher", "Financial Analyst"]}
+            >
               <VehiclePage />
             </ProtectedRoute>
           }
@@ -36,11 +39,10 @@ function App() {
         <Route
           path="/drivers"
           element={
-            <ProtectedRoute allowedRoles={["Safety Officer"]}>
-              <PlaceholderPage
-                title="Drivers & Safety Profiles"
-                description="Manage drivers, licences and safety scores."
-              />
+            <ProtectedRoute
+              allowedRoles={["Safety Officer", "Fleet Manager"]}
+            >
+              <DriverPage />
             </ProtectedRoute>
           }
         />
