@@ -9,6 +9,7 @@ const vehicleRoutes = require("./routes/vehicleRoutes");
 const tripRoutes = require("./routes/tripRoutes");
 const maintenanceRoutes = require("./routes/maintenanceRoutes");
 const expenseRoutes = require("./routes/expenseRoutes");
+const driverRoutes = require("./routes/driverRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -35,6 +36,7 @@ app.use("/api/vehicles", vehicleRoutes);
 app.use("/api/trips", tripRoutes);
 app.use("/api/maintenance", maintenanceRoutes);
 app.use("/api/expenses", expenseRoutes);
+app.use("/api/drivers", driverRoutes);
 
 // Start server
 async function startServer() {
